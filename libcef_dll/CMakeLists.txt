@@ -715,6 +715,17 @@ set_target_properties(${CEF_TARGET} PROPERTIES PREFIX "")
 
 install(TARGETS ${CEF_TARGET}
     ARCHIVE DESTINATION ${CMAKE_SYSTEM_NAME}/lib
-    PUBLIC_HEADER DESTINATION ${CMAKE_SYSTEM_NAME}/include
+    PUBLIC_HEADER DESTINATION ${CMAKE_SYSTEM_NAME}/include/cef
 )
+
+install(DIRECTORY ../include
+    DESTINATION ${CMAKE_SYSTEM_NAME}/include/
+)
+
+if(${MSVC})
+    install(FILES ${PROJECT_BINARY_DIR}/libcef_dll_wrapper/Debug/libcef_dll_wrapper.pdb
+        DESTINATION ${CMAKE_SYSTEM_NAME}/lib
+        CONFIGURATIONS Debug
+        )
+endif(${MSVC})
 
