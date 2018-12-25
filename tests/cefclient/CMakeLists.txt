@@ -37,7 +37,6 @@ set(CEFCLIENT_BROWSER_BROWSER_SRCS
   browser/osr_dragdrop_events.h
   browser/osr_renderer.cc
   browser/osr_renderer.h
-  browser/osr_renderer_settings.h
   browser/preferences_test.cc
   browser/preferences_test.h
   browser/resource.h
@@ -256,18 +255,10 @@ set(CEFCLIENT_WINDOWS_BROWSER_SRCS
   browser/osr_accessibility_node.cc
   browser/osr_accessibility_node.h
   browser/osr_accessibility_node_win.cc
-  browser/osr_d3d11_win.cc
-  browser/osr_d3d11_win.h
   browser/osr_dragdrop_win.cc
   browser/osr_dragdrop_win.h
   browser/osr_ime_handler_win.cc
   browser/osr_ime_handler_win.h
-  browser/osr_render_handler_win.cc
-  browser/osr_render_handler_win.h
-  browser/osr_render_handler_win_d3d11.cc
-  browser/osr_render_handler_win_d3d11.h
-  browser/osr_render_handler_win_gl.cc
-  browser/osr_render_handler_win_gl.h
   browser/osr_window_win.cc
   browser/osr_window_win.h
   browser/resource_util_win_idmap.cc
@@ -538,7 +529,7 @@ if(OS_WINDOWS)
   add_executable(${CEF_TARGET} WIN32 ${CEFCLIENT_SRCS})
   SET_EXECUTABLE_TARGET_PROPERTIES(${CEF_TARGET})
   add_dependencies(${CEF_TARGET} libcef_dll_wrapper)
-  target_link_libraries(${CEF_TARGET} libcef_lib libcef_dll_wrapper ${CEF_STANDARD_LIBS} d3d11.lib glu32.lib imm32.lib opengl32.lib)
+  target_link_libraries(${CEF_TARGET} libcef_lib libcef_dll_wrapper ${CEF_STANDARD_LIBS} glu32.lib imm32.lib opengl32.lib)
 
   if(USE_ATL)
     # Required by VS2013 to link accessibility API functions.

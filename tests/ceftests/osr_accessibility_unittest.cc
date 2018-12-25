@@ -47,8 +47,9 @@ class AccessibilityTestHandler : public TestHandler,
   CefRefPtr<CefRenderHandler> GetRenderHandler() override { return this; }
 
   // Cef Renderer Handler Methods
-  void GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect) override {
+  bool GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect) override {
     rect = CefRect(0, 0, kOsrWidth, kOsrHeight);
+    return true;
   }
 
   bool GetScreenInfo(CefRefPtr<CefBrowser> browser,

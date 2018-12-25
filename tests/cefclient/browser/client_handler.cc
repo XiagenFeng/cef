@@ -831,8 +831,6 @@ void ClientHandler::ShowDevTools(CefRefPtr<CefBrowser> browser,
   CefRefPtr<CefClient> client;
   CefBrowserSettings settings;
 
-  MainContext::Get()->PopulateBrowserSettings(&settings);
-
   CefRefPtr<CefBrowserHost> host = browser->GetHost();
 
   // Test if the DevTools browser already exists.
