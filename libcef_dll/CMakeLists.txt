@@ -719,7 +719,7 @@ install(TARGETS ${CEF_TARGET}
 )
 
 install(DIRECTORY ../include
-    DESTINATION ${CMAKE_SYSTEM_NAME}/include/
+    DESTINATION ${CMAKE_SYSTEM_NAME}
 )
 
 if(${MSVC})
