@@ -1,4 +1,4 @@
-// Copyright (c) 2018 The Chromium Embedded Framework Authors. All rights
+// Copyright (c) 2019 The Chromium Embedded Framework Authors. All rights
 // reserved. Use of this source code is governed by a BSD-style license that
 // can be found in the LICENSE file.
 //
@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=94f3426ec439832b92f0d46244dbe898ff70765a$
+// $hash=7d7e8cc63f96452658cde9ea1d6a22849bd94ce4$
 //
 
 #ifndef CEF_LIBCEF_DLL_CTOCPP_DOMDOCUMENT_CTOCPP_H_
@@ -31,6 +31,7 @@ class CefDOMDocumentCToCpp : public CefCToCppRefCounted<CefDOMDocumentCToCpp,
                                                         cef_domdocument_t> {
  public:
   CefDOMDocumentCToCpp();
+  virtual ~CefDOMDocumentCToCpp();
 
   // CefDOMDocument methods.
   Type GetType() OVERRIDE;

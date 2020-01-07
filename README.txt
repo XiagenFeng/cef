@@ -1,19 +1,19 @@
-Chromium Embedded Framework (CEF) Standard Binary Distribution for Mac OS-X
+Chromium Embedded Framework (CEF) Minimal Binary Distribution for Linux
 -------------------------------------------------------------------------------
 
-Date:             November 15, 2018
+Date:             December 31, 2019
 
-CEF Version:      3.3538.1852.gcb937fc
+CEF Version:      79.0.10+ge866a07+chromium-79.0.3945.88
 CEF URL:          https://bitbucket.org/chromiumembedded/cef.git
-                  @cb937fc9cd02a5b5f4d5aea2d880e05fbab621bf
+                  @e866a071233cda9080ffd54c0713634f11bf8d1f
 
-Chromium Version: 70.0.3538.102
+Chromium Version: 79.0.3945.88
 Chromium URL:     https://chromium.googlesource.com/chromium/src.git
-                  @da0769ae4373ad685a7892d917e6629f22d4d927
+                  @09a11f5a19d257c835e4faeceea51780fa3e27dd
 
-This distribution contains all components necessary to build and distribute an
-application using CEF on the Mac OS-X platform. Please see the LICENSING
-section of this document for licensing terms and conditions.
+This distribution contains the minimial components necessary to build and
+distribute an application using CEF on the Linux platform. Please see
+the LICENSING section of this document for licensing terms and conditions.
 
 
 CONTENTS
@@ -21,35 +21,17 @@ CONTENTS
 
 cmake       Contains CMake configuration files shared by all targets.
 
-Debug       Contains the "Chromium Embedded Framework.framework" and other
-            components required to run the debug version of CEF-based
-            applications.
-
 include     Contains all required CEF header files.
 
 libcef_dll  Contains the source code for the libcef_dll_wrapper static library
             that all applications using the CEF C++ API must link against.
 
-Release     Contains the "Chromium Embedded Framework.framework" and other
-            components required to run the release version of CEF-based
-            applications.
+Release     Contains libcef.so and other components required to run the release
+            version of CEF-based applications. By default these files should be
+            placed in the same directory as the executable.
 
-tests/      Directory of tests that demonstrate CEF usage.
-
-  cefclient Contains the cefclient sample application configured to build
-            using the files in this distribution. This application demonstrates
-            a wide range of CEF functionalities.
-
-  cefsimple Contains the cefsimple sample application configured to build
-            using the files in this distribution. This application demonstrates
-            the minimal functionality required to create a browser window.
-
-  ceftests  Contains unit tests that exercise the CEF APIs.
-
-  gtest     Contains the Google C++ Testing Framework used by the ceftests
-            target.
-
-  shared    Contains source code shared by the cefclient and ceftests targets.
+Resources   Contains resources required by libcef.so. By default these files
+            should be placed in the same directory as libcef.so.
 
 
 USAGE
@@ -67,72 +49,22 @@ https://bitbucket.org/chromiumembedded/cef/
 REDISTRIBUTION
 --------------
 
-This binary distribution contains the below components. Components listed under
-the "required" section must be redistributed with all applications using CEF.
-Components listed under the "optional" section may be excluded if the related
-features will not be used.
-
-Applications using CEF on OS X must follow a specific app bundle structure.
-Replace "cefclient" in the below example with your application name.
-
-cefclient.app/
-  Contents/
-    Frameworks/
-      Chromium Embedded Framework.framework/
-        Chromium Embedded Framework <= main application library
-        Libraries/
-          libEGL.dylib <= angle support libraries
-          libGLESv2.dylib <=^
-          libswiftshader_libEGL.dylib <= swiftshader support libraries
-          libswiftshader_libGLESv2.dylib <=^
-        Resources/
-          cef.pak <= non-localized resources and strings
-          cef_100_percent.pak <====^
-          cef_200_percent.pak <====^
-          cef_extensions.pak <=====^
-          devtools_resources.pak <=^
-          icudtl.dat <= unicode support
-          natives_blob.bin, snapshot_blob.bin, v8_context_snapshot.bin <= V8 initial snapshot
-          en.lproj/, ... <= locale-specific resources and strings
-          Info.plist
-      cefclient Helper.app/
-        Contents/
-          Info.plist
-          MacOS/
-            cefclient Helper <= helper executable
-          Pkginfo
-      Info.plist
-    MacOS/
-      cefclient <= cefclient application executable
-    Pkginfo
-    Resources/
-      binding.html, ... <= cefclient application resources
-
-The "Chromium Embedded Framework.framework" is an unversioned framework that
-contains CEF binaries and resources. Executables (cefclient, cefclient Helper,
-etc) must load this framework dynamically at runtime instead of linking it
-directly. See the documentation in include/wrapper/cef_library_loader.h for
-more information.
-
-The "cefclient Helper" app is used for executing separate processes (renderer,
-plugin, etc) with different characteristics. It needs to have a separate app
-bundle and Info.plist file so that, among other things, it doesn’t show dock
-icons.
+This binary distribution contains the below components.
 
 Required components:
 
 The following components are required. CEF will not function without them.
 
 * CEF core library.
-  * Chromium Embedded Framework.framework/Chromium Embedded Framework
+  * libcef.so
 
 * Unicode support data.
-  * Chromium Embedded Framework.framework/Resources/icudtl.dat
+  * icudtl.dat
 
 * V8 snapshot data.
-  * Chromium Embedded Framework.framework/Resources/natives_blob.bin
-  * Chromium Embedded Framework.framework/Resources/snapshot_blob.bin
-  * Chromium Embedded Framework.framework/Resources/v8_context_snapshot.bin
+  * natives_blob.bin
+  * snapshot_blob.bin
+  * v8_context_snapshot.bin
 
 Optional components:
 
@@ -141,44 +73,48 @@ run but any related functionality may become broken or disabled.
 
 * Localized resources.
   Locale file loading can be disabled completely using
-  CefSettings.pack_loading_disabled.
-
-  * Chromium Embedded Framework.framework/Resources/*.lproj/
+  CefSettings.pack_loading_disabled. The locales directory path can be
+  customized using CefSettings.locales_dir_path. 
+ 
+  * locales/
     Directory containing localized resources used by CEF, Chromium and Blink. A
-    .pak file is loaded from this directory based on the CefSettings.locale
-    value. Only configured locales need to be distributed. If no locale is
-    configured the default locale of "en" will be used. Without these files
-    arbitrary Web components may display incorrectly.
+    .pak file is loaded from this directory based on the value of environment
+    variables which are read with the following precedence order: LANGUAGE,
+    LC_ALL, LC_MESSAGES and LANG. Only configured locales need to be
+    distributed. If no locale is configured the default locale of "en-US" will
+    be used. Without these files arbitrary Web components may display
+    incorrectly.
 
 * Other resources.
   Pack file loading can be disabled completely using
-  CefSettings.pack_loading_disabled.
+  CefSettings.pack_loading_disabled. The resources directory path can be
+  customized using CefSettings.resources_dir_path.
 
-  * Chromium Embedded Framework.framework/Resources/cef.pak
-  * Chromium Embedded Framework.framework/Resources/cef_100_percent.pak
-  * Chromium Embedded Framework.framework/Resources/cef_200_percent.pak
+  * cef.pak
+  * cef_100_percent.pak
+  * cef_200_percent.pak
     These files contain non-localized resources used by CEF, Chromium and Blink.
     Without these files arbitrary Web components may display incorrectly.
 
-  * Chromium Embedded Framework.framework/Resources/cef_extensions.pak
+  * cef_extensions.pak
     This file contains non-localized resources required for extension loading.
     Pass the `--disable-extensions` command-line flag to disable use of this
     file. Without this file components that depend on the extension system,
     such as the PDF viewer, will not function.
 
-  * Chromium Embedded Framework.framework/Resources/devtools_resources.pak
+  * devtools_resources.pak
     This file contains non-localized resources required for Chrome Developer
     Tools. Without this file Chrome Developer Tools will not function.
 
 * Angle support.
-  * Chromium Embedded Framework.framework/Libraries/libEGL.dylib
-  * Chromium Embedded Framework.framework/Libraries/libGLESv2.dylib
+  * libEGL.so
+  * libGLESv2.so
   Without these files HTML5 accelerated content like 2D canvas, 3D CSS and WebGL
   will not function.
 
 * SwiftShader support.
-  * Chromium Embedded Framework.framework/Libraries/libswiftshader_libEGL.dylib
-  * Chromium Embedded Framework.framework/Libraries/libswiftshader_libGLESv2.dylib
+  * swiftshader/libEGL.so
+  * swiftshader/libGLESv2.so
   Without these files WebGL will not function in software-only mode when the GPU
   is not available or disabled.
 

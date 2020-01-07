@@ -1,4 +1,4 @@
-// Copyright (c) 2018 The Chromium Embedded Framework Authors. All rights
+// Copyright (c) 2019 The Chromium Embedded Framework Authors. All rights
 // reserved. Use of this source code is governed by a BSD-style license that
 // can be found in the LICENSE file.
 //
@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=47f1724d1f28c8295717e5df6ce8f5f8602ce1d5$
+// $hash=d256b13437952652b8121ea7d7e10eddfebf8552$
 //
 
 #ifndef CEF_LIBCEF_DLL_WRAPPER_TYPES_H_
@@ -38,6 +38,7 @@ enum CefWrapperType {
   WT_COMPLETION_CALLBACK,
   WT_CONTEXT_MENU_HANDLER,
   WT_CONTEXT_MENU_PARAMS,
+  WT_COOKIE_ACCESS_FILTER,
   WT_COOKIE_MANAGER,
   WT_COOKIE_VISITOR,
   WT_DOMDOCUMENT,
@@ -102,6 +103,9 @@ enum CefWrapperType {
   WT_RESOURCE_BUNDLE,
   WT_RESOURCE_BUNDLE_HANDLER,
   WT_RESOURCE_HANDLER,
+  WT_RESOURCE_READ_CALLBACK,
+  WT_RESOURCE_REQUEST_HANDLER,
+  WT_RESOURCE_SKIP_CALLBACK,
   WT_RESPONSE,
   WT_RESPONSE_FILTER,
   WT_RUN_CONTEXT_MENU_CALLBACK,

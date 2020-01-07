@@ -1,4 +1,4 @@
-// Copyright (c) 2018 The Chromium Embedded Framework Authors. All rights
+// Copyright (c) 2019 The Chromium Embedded Framework Authors. All rights
 // reserved. Use of this source code is governed by a BSD-style license that
 // can be found in the LICENSE file.
 //
@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=c5bbc52bc74c5a7d331f5af187c496cf2044b1ee$
+// $hash=d5260efeb3be935bd7e7a064c91967d34214ac82$
 //
 
 #include "libcef_dll/ctocpp/v8context_ctocpp.h"
@@ -233,6 +233,10 @@ bool CefV8ContextCToCpp::Eval(const CefString& code,
 
 CefV8ContextCToCpp::CefV8ContextCToCpp() {}
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefV8ContextCToCpp::~CefV8ContextCToCpp() {}
+
 template <>
 cef_v8context_t*
 CefCToCppRefCounted<CefV8ContextCToCpp, CefV8Context, cef_v8context_t>::
@@ -240,13 +244,6 @@ CefCToCppRefCounted<CefV8ContextCToCpp, CefV8Context, cef_v8context_t>::
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount
-    CefCToCppRefCounted<CefV8ContextCToCpp, CefV8Context, cef_v8context_t>::
-        DebugObjCt ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType CefCToCppRefCounted<CefV8ContextCToCpp,

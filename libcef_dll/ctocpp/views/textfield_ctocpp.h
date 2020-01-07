@@ -1,4 +1,4 @@
-// Copyright (c) 2018 The Chromium Embedded Framework Authors. All rights
+// Copyright (c) 2019 The Chromium Embedded Framework Authors. All rights
 // reserved. Use of this source code is governed by a BSD-style license that
 // can be found in the LICENSE file.
 //
@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=d0221cfe3f04a0344bd3efd0e0b2815aff3bb23a$
+// $hash=2ca8fa808e192f52dd9df44bd424096890d4fedf$
 //
 
 #ifndef CEF_LIBCEF_DLL_CTOCPP_VIEWS_TEXTFIELD_CTOCPP_H_
@@ -31,6 +31,7 @@ class CefTextfieldCToCpp : public CefCToCppRefCounted<CefTextfieldCToCpp,
                                                       cef_textfield_t> {
  public:
   CefTextfieldCToCpp();
+  virtual ~CefTextfieldCToCpp();
 
   // CefTextfield methods.
   void SetPasswordInput(bool password_input) OVERRIDE;

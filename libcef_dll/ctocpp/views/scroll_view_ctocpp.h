@@ -1,4 +1,4 @@
-// Copyright (c) 2018 The Chromium Embedded Framework Authors. All rights
+// Copyright (c) 2019 The Chromium Embedded Framework Authors. All rights
 // reserved. Use of this source code is governed by a BSD-style license that
 // can be found in the LICENSE file.
 //
@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=e0c47d2dbf98c3f468afbf92492dca08645fe451$
+// $hash=d595053c7f504c985e1e0e723d0a9a707246af75$
 //
 
 #ifndef CEF_LIBCEF_DLL_CTOCPP_VIEWS_SCROLL_VIEW_CTOCPP_H_
@@ -31,6 +31,7 @@ class CefScrollViewCToCpp : public CefCToCppRefCounted<CefScrollViewCToCpp,
                                                        cef_scroll_view_t> {
  public:
   CefScrollViewCToCpp();
+  virtual ~CefScrollViewCToCpp();
 
   // CefScrollView methods.
   void SetContentView(CefRefPtr<CefView> view) OVERRIDE;

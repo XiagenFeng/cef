@@ -1,4 +1,4 @@
-// Copyright (c) 2018 The Chromium Embedded Framework Authors. All rights
+// Copyright (c) 2019 The Chromium Embedded Framework Authors. All rights
 // reserved. Use of this source code is governed by a BSD-style license that
 // can be found in the LICENSE file.
 //
@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=e6a0ebbd544399c92b9d61abef0e659a607ff940$
+// $hash=ee2fcda18fd480a10fc3c5786d023f2bc58dda3c$
 //
 
 #ifndef CEF_LIBCEF_DLL_CPPTOC_VIEWS_WINDOW_DELEGATE_CPPTOC_H_
@@ -34,6 +34,7 @@ class CefWindowDelegateCppToC
                                  cef_window_delegate_t> {
  public:
   CefWindowDelegateCppToC();
+  virtual ~CefWindowDelegateCppToC();
 };
 
 #endif  // CEF_LIBCEF_DLL_CPPTOC_VIEWS_WINDOW_DELEGATE_CPPTOC_H_

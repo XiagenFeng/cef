@@ -141,6 +141,13 @@ if(OS_LINUX)
   include(CheckCCompilerFlag)
   include(CheckCXXCompilerFlag)
 
+  CHECK_CXX_COMPILER_FLAG(-Wno-undefined-var-template COMPILER_SUPPORTS_NO_UNDEFINED_VAR_TEMPLATE)
+  if(COMPILER_SUPPORTS_NO_UNDEFINED_VAR_TEMPLATE)
+    list(APPEND CEF_CXX_COMPILER_FLAGS
+      -Wno-undefined-var-template   # Don't warn about potentially uninstantiated static members
+      )
+  endif()
+
   CHECK_C_COMPILER_FLAG(-Wno-unused-local-typedefs COMPILER_SUPPORTS_NO_UNUSED_LOCAL_TYPEDEFS)
   if(COMPILER_SUPPORTS_NO_UNUSED_LOCAL_TYPEDEFS)
     list(APPEND CEF_C_COMPILER_FLAGS
@@ -159,6 +166,12 @@ if(OS_LINUX)
   if(COMPILER_SUPPORTS_NO_NARROWING)
     list(APPEND CEF_CXX_COMPILER_FLAGS
       -Wno-narrowing              # Don't warn about type narrowing
+      )
+  endif()
+
+  if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    list(APPEND CEF_CXX_COMPILER_FLAGS
+      -Wno-attributes             # The cfi-icall attribute is not supported by the GNU C++ compiler
       )
   endif()
 
@@ -319,6 +332,9 @@ if(OS_MACOSX)
     set(CMAKE_OSX_ARCHITECTURES "i386")
   endif()
 
+  # Prevent Xcode 11 from doing automatic codesigning.
+  set(CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "")
+
   # CEF directory paths.
   set(CEF_BINARY_DIR          "${_CEF_ROOT}/$<CONFIGURATION>")
   set(CEF_BINARY_DIR_DEBUG    "${_CEF_ROOT}/Debug")
@@ -333,6 +349,15 @@ if(OS_MACOSX)
     set(CEF_SANDBOX_LIB_DEBUG "${CEF_BINARY_DIR_DEBUG}/cef_sandbox.a")
     set(CEF_SANDBOX_LIB_RELEASE "${CEF_BINARY_DIR_RELEASE}/cef_sandbox.a")
   endif()
+
+  # CEF Helper app suffixes.
+  # Format is "<name suffix>:<target suffix>:<plist suffix>".
+  set(CEF_HELPER_APP_SUFFIXES
+    "::"
+    " (GPU):_gpu:.gpu"
+    " (Plugin):_plugin:.plugin"
+    " (Renderer):_renderer:.renderer"
+    )
 endif()
 
 
@@ -361,6 +386,11 @@ if(OS_WINDOWS)
       1913  # VS2017 version 15.6
       1914  # VS2017 version 15.7
       1915  # VS2017 version 15.8
+      1916  # VS2017 version 15.9
+      1920  # VS2019 version 16.0
+      1921  # VS2019 version 16.1
+      1922  # VS2019 version 16.2
+      1923  # VS2019 version 16.3
       )
     list(FIND supported_msvc_versions ${MSVC_VERSION} _index)
     if (${_index} EQUAL -1)
@@ -446,7 +476,6 @@ if(OS_WINDOWS)
   # List of CEF binary files.
   set(CEF_BINARY_FILES
     chrome_elf.dll
-    d3dcompiler_43.dll
     d3dcompiler_47.dll
     libcef.dll
     libEGL.dll
@@ -477,7 +506,11 @@ if(OS_WINDOWS)
     # Libraries required by cef_sandbox.lib.
     set(CEF_SANDBOX_STANDARD_LIBS
       dbghelp.lib
+      Delayimp.lib
+      PowrProf.lib
+      Propsys.lib
       psapi.lib
+      SetupAPI.lib
       version.lib
       wbemuuid.lib
       winmm.lib

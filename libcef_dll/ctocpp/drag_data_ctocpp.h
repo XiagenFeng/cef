@@ -1,4 +1,4 @@
-// Copyright (c) 2018 The Chromium Embedded Framework Authors. All rights
+// Copyright (c) 2019 The Chromium Embedded Framework Authors. All rights
 // reserved. Use of this source code is governed by a BSD-style license that
 // can be found in the LICENSE file.
 //
@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=a3541f100ce029d2cf03cf61ed175cf2894abbd4$
+// $hash=6e3784bb8fd9a3af1009dd8eb15ec053c454b509$
 //
 
 #ifndef CEF_LIBCEF_DLL_CTOCPP_DRAG_DATA_CTOCPP_H_
@@ -32,6 +32,7 @@ class CefDragDataCToCpp : public CefCToCppRefCounted<CefDragDataCToCpp,
                                                      cef_drag_data_t> {
  public:
   CefDragDataCToCpp();
+  virtual ~CefDragDataCToCpp();
 
   // CefDragData methods.
   CefRefPtr<CefDragData> Clone() OVERRIDE;

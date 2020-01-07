@@ -1,4 +1,4 @@
-// Copyright (c) 2018 The Chromium Embedded Framework Authors. All rights
+// Copyright (c) 2019 The Chromium Embedded Framework Authors. All rights
 // reserved. Use of this source code is governed by a BSD-style license that
 // can be found in the LICENSE file.
 //
@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=572e147d8e625ad7cb7b7e58e219b669824848b0$
+// $hash=87fdfab045038e939a688294888138220b99f012$
 //
 
 #ifndef CEF_LIBCEF_DLL_CTOCPP_EXTENSION_CTOCPP_H_
@@ -35,6 +35,7 @@ class CefExtensionCToCpp : public CefCToCppRefCounted<CefExtensionCToCpp,
                                                       cef_extension_t> {
  public:
   CefExtensionCToCpp();
+  virtual ~CefExtensionCToCpp();
 
   // CefExtension methods.
   CefString GetIdentifier() OVERRIDE;

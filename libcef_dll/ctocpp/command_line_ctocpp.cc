@@ -1,4 +1,4 @@
-// Copyright (c) 2018 The Chromium Embedded Framework Authors. All rights
+// Copyright (c) 2019 The Chromium Embedded Framework Authors. All rights
 // reserved. Use of this source code is governed by a BSD-style license that
 // can be found in the LICENSE file.
 //
@@ -9,11 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=edec72248ee3164c514d5576350a20fb1f10019c$
+// $hash=0e24c6b07a7377337132b09396d9e5f3e4eca517$
 //
 
 #include "libcef_dll/ctocpp/command_line_ctocpp.h"
-#include "include/cef_version.h"
+#include "include/cef_api_hash.h"
 #include "libcef_dll/transfer_util.h"
 
 // STATIC METHODS - Body may be edited by hand.
@@ -418,6 +418,10 @@ void CefCommandLineCToCpp::PrependWrapper(const CefString& wrapper) {
 
 CefCommandLineCToCpp::CefCommandLineCToCpp() {}
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefCommandLineCToCpp::~CefCommandLineCToCpp() {}
+
 template <>
 cef_command_line_t*
 CefCToCppRefCounted<CefCommandLineCToCpp, CefCommandLine, cef_command_line_t>::
@@ -425,14 +429,6 @@ CefCToCppRefCounted<CefCommandLineCToCpp, CefCommandLine, cef_command_line_t>::
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount CefCToCppRefCounted<CefCommandLineCToCpp,
-                                         CefCommandLine,
-                                         cef_command_line_t>::DebugObjCt
-    ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType CefCToCppRefCounted<CefCommandLineCToCpp,

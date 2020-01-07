@@ -1,4 +1,4 @@
-// Copyright (c) 2018 The Chromium Embedded Framework Authors. All rights
+// Copyright (c) 2019 The Chromium Embedded Framework Authors. All rights
 // reserved. Use of this source code is governed by a BSD-style license that
 // can be found in the LICENSE file.
 //
@@ -9,16 +9,19 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=f723213856f3ee2ad95573b138076cce5b8f9aae$
+// $hash=db9e1aa05b67bbc704bac6cf2d37122a5ec1d94f$
 //
 
 #include "libcef_dll/ctocpp/run_context_menu_callback_ctocpp.h"
+#include "libcef_dll/shutdown_checker.h"
 
 // VIRTUAL METHODS - Body may be edited by hand.
 
 NO_SANITIZE("cfi-icall")
 void CefRunContextMenuCallbackCToCpp::Continue(int command_id,
                                                EventFlags event_flags) {
+  shutdown_checker::AssertNotShutdown();
+
   cef_run_context_menu_callback_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, cont))
     return;
@@ -30,6 +33,8 @@ void CefRunContextMenuCallbackCToCpp::Continue(int command_id,
 }
 
 NO_SANITIZE("cfi-icall") void CefRunContextMenuCallbackCToCpp::Cancel() {
+  shutdown_checker::AssertNotShutdown();
+
   cef_run_context_menu_callback_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, cancel))
     return;
@@ -44,6 +49,12 @@ NO_SANITIZE("cfi-icall") void CefRunContextMenuCallbackCToCpp::Cancel() {
 
 CefRunContextMenuCallbackCToCpp::CefRunContextMenuCallbackCToCpp() {}
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefRunContextMenuCallbackCToCpp::~CefRunContextMenuCallbackCToCpp() {
+  shutdown_checker::AssertNotShutdown();
+}
+
 template <>
 cef_run_context_menu_callback_t* CefCToCppRefCounted<
     CefRunContextMenuCallbackCToCpp,
@@ -54,14 +65,6 @@ cef_run_context_menu_callback_t* CefCToCppRefCounted<
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount CefCToCppRefCounted<
-    CefRunContextMenuCallbackCToCpp,
-    CefRunContextMenuCallback,
-    cef_run_context_menu_callback_t>::DebugObjCt ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType

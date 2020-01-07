@@ -1,4 +1,4 @@
-// Copyright (c) 2018 The Chromium Embedded Framework Authors. All rights
+// Copyright (c) 2019 The Chromium Embedded Framework Authors. All rights
 // reserved. Use of this source code is governed by a BSD-style license that
 // can be found in the LICENSE file.
 //
@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=5df98aa958bf742a77d7d2bb405f849355202e64$
+// $hash=805b8d1743259584baff4a4a9c3eb39fa14d0d68$
 //
 
 #ifndef CEF_LIBCEF_DLL_CTOCPP_IMAGE_CTOCPP_H_
@@ -30,6 +30,7 @@ class CefImageCToCpp
     : public CefCToCppRefCounted<CefImageCToCpp, CefImage, cef_image_t> {
  public:
   CefImageCToCpp();
+  virtual ~CefImageCToCpp();
 
   // CefImage methods.
   bool IsEmpty() OVERRIDE;

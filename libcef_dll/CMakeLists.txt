@@ -19,6 +19,8 @@ set(CEF_TARGET libcef_dll_wrapper)
 
 set(LIBCEF_SRCS
   ptr_util.h
+  shutdown_checker.cc
+  shutdown_checker.h
   transfer_util.cc
   transfer_util.h
   wrapper_types.h
@@ -57,6 +59,8 @@ set(LIBCEF_CPPTOC_SRCS
   cpptoc/completion_callback_cpptoc.h
   cpptoc/context_menu_handler_cpptoc.cc
   cpptoc/context_menu_handler_cpptoc.h
+  cpptoc/cookie_access_filter_cpptoc.cc
+  cpptoc/cookie_access_filter_cpptoc.h
   cpptoc/cookie_visitor_cpptoc.cc
   cpptoc/cookie_visitor_cpptoc.h
   cpptoc/cpptoc_ref_counted.h
@@ -117,6 +121,8 @@ set(LIBCEF_CPPTOC_SRCS
   cpptoc/resource_bundle_handler_cpptoc.h
   cpptoc/resource_handler_cpptoc.cc
   cpptoc/resource_handler_cpptoc.h
+  cpptoc/resource_request_handler_cpptoc.cc
+  cpptoc/resource_request_handler_cpptoc.h
   cpptoc/response_filter_cpptoc.cc
   cpptoc/response_filter_cpptoc.h
   cpptoc/run_file_dialog_callback_cpptoc.cc
@@ -251,6 +257,10 @@ set(LIBCEF_CTOCPP_SRCS
   ctocpp/request_ctocpp.h
   ctocpp/resource_bundle_ctocpp.cc
   ctocpp/resource_bundle_ctocpp.h
+  ctocpp/resource_read_callback_ctocpp.cc
+  ctocpp/resource_read_callback_ctocpp.h
+  ctocpp/resource_skip_callback_ctocpp.cc
+  ctocpp/resource_skip_callback_ctocpp.h
   ctocpp/response_ctocpp.cc
   ctocpp/response_ctocpp.h
   ctocpp/run_context_menu_callback_ctocpp.cc
@@ -354,6 +364,7 @@ source_group(libcef_dll\\\\ctocpp\\\\views FILES ${LIBCEF_CTOCPP_VIEWS_SRCS})
 
 set(LIBCEF_INCLUDE_SRCS
   ../include/cef_accessibility_handler.h
+  ../include/cef_api_hash.h
   ../include/cef_app.h
   ../include/cef_auth_callback.h
   ../include/cef_base.h
@@ -362,6 +373,7 @@ set(LIBCEF_INCLUDE_SRCS
   ../include/cef_callback.h
   ../include/cef_client.h
   ../include/cef_command_line.h
+  ../include/cef_config.h
   ../include/cef_context_menu_handler.h
   ../include/cef_cookie.h
   ../include/cef_crash_util.h
@@ -396,12 +408,14 @@ set(LIBCEF_INCLUDE_SRCS
   ../include/cef_render_handler.h
   ../include/cef_render_process_handler.h
   ../include/cef_request.h
+  ../include/cef_request_callback.h
   ../include/cef_request_context.h
   ../include/cef_request_context_handler.h
   ../include/cef_request_handler.h
   ../include/cef_resource_bundle.h
   ../include/cef_resource_bundle_handler.h
   ../include/cef_resource_handler.h
+  ../include/cef_resource_request_handler.h
   ../include/cef_response.h
   ../include/cef_response_filter.h
   ../include/cef_scheme.h
@@ -469,6 +483,7 @@ set(LIBCEF_INCLUDE_BASE_INTERNAL_SRCS
   ../include/base/internal/cef_thread_checker_impl.h
   )
 set(LIBCEF_INCLUDE_BASE_INTERNAL_SRCS_LINUX
+  ../include/base/internal/cef_atomicops_arm64_gcc.h
   ../include/base/internal/cef_atomicops_arm_gcc.h
   ../include/base/internal/cef_atomicops_atomicword_compat.h
   ../include/base/internal/cef_atomicops_x86_gcc.h
@@ -478,6 +493,7 @@ set(LIBCEF_INCLUDE_BASE_INTERNAL_SRCS_MACOSX
   ../include/base/internal/cef_atomicops_mac.h
   )
 set(LIBCEF_INCLUDE_BASE_INTERNAL_SRCS_WINDOWS
+  ../include/base/internal/cef_atomicops_arm64_msvc.h
   ../include/base/internal/cef_atomicops_x86_msvc.h
   ../include/base/internal/cef_bind_internal_win.h
   )
@@ -527,6 +543,7 @@ set(LIBCEF_INCLUDE_CAPI_SRCS
   ../include/capi/cef_process_util_capi.h
   ../include/capi/cef_render_handler_capi.h
   ../include/capi/cef_render_process_handler_capi.h
+  ../include/capi/cef_request_callback_capi.h
   ../include/capi/cef_request_capi.h
   ../include/capi/cef_request_context_capi.h
   ../include/capi/cef_request_context_handler_capi.h
@@ -534,6 +551,7 @@ set(LIBCEF_INCLUDE_CAPI_SRCS
   ../include/capi/cef_resource_bundle_capi.h
   ../include/capi/cef_resource_bundle_handler_capi.h
   ../include/capi/cef_resource_handler_capi.h
+  ../include/capi/cef_resource_request_handler_capi.h
   ../include/capi/cef_response_capi.h
   ../include/capi/cef_response_filter_capi.h
   ../include/capi/cef_scheme_capi.h
@@ -728,4 +746,3 @@ if(${MSVC})
         CONFIGURATIONS Debug
         )
 endif(${MSVC})
-

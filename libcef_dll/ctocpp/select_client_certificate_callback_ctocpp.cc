@@ -1,4 +1,4 @@
-// Copyright (c) 2018 The Chromium Embedded Framework Authors. All rights
+// Copyright (c) 2019 The Chromium Embedded Framework Authors. All rights
 // reserved. Use of this source code is governed by a BSD-style license that
 // can be found in the LICENSE file.
 //
@@ -9,17 +9,20 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=110ce393b3a52977fc6ff1de2149fc75d4e2dfad$
+// $hash=fb7fca5b07fadcd8481d446b578af061d9d1f993$
 //
 
 #include "libcef_dll/ctocpp/select_client_certificate_callback_ctocpp.h"
 #include "libcef_dll/ctocpp/x509certificate_ctocpp.h"
+#include "libcef_dll/shutdown_checker.h"
 
 // VIRTUAL METHODS - Body may be edited by hand.
 
 NO_SANITIZE("cfi-icall")
 void CefSelectClientCertificateCallbackCToCpp::Select(
     CefRefPtr<CefX509Certificate> cert) {
+  shutdown_checker::AssertNotShutdown();
+
   cef_select_client_certificate_callback_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, select))
     return;
@@ -37,6 +40,13 @@ void CefSelectClientCertificateCallbackCToCpp::Select(
 CefSelectClientCertificateCallbackCToCpp::
     CefSelectClientCertificateCallbackCToCpp() {}
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefSelectClientCertificateCallbackCToCpp::
+    ~CefSelectClientCertificateCallbackCToCpp() {
+  shutdown_checker::AssertNotShutdown();
+}
+
 template <>
 cef_select_client_certificate_callback_t*
 CefCToCppRefCounted<CefSelectClientCertificateCallbackCToCpp,
@@ -46,14 +56,6 @@ CefCToCppRefCounted<CefSelectClientCertificateCallbackCToCpp,
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount CefCToCppRefCounted<
-    CefSelectClientCertificateCallbackCToCpp,
-    CefSelectClientCertificateCallback,
-    cef_select_client_certificate_callback_t>::DebugObjCt ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType CefCToCppRefCounted<
