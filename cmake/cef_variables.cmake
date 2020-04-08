@@ -218,7 +218,6 @@ if(OS_LINUX)
     libcef.so
     libEGL.so
     libGLESv2.so
-    natives_blob.bin
     snapshot_blob.bin
     v8_context_snapshot.bin
     swiftshader
@@ -391,6 +390,7 @@ if(OS_WINDOWS)
       1921  # VS2019 version 16.1
       1922  # VS2019 version 16.2
       1923  # VS2019 version 16.3
+      1924  # VS2019 version 16.4
       )
     list(FIND supported_msvc_versions ${MSVC_VERSION} _index)
     if (${_index} EQUAL -1)
@@ -480,7 +480,6 @@ if(OS_WINDOWS)
     libcef.dll
     libEGL.dll
     libGLESv2.dll
-    natives_blob.bin
     snapshot_blob.bin
     v8_context_snapshot.bin
     swiftshader
